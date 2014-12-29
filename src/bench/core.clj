@@ -12,7 +12,7 @@
 
 (defn ref-calc []
   (dotimes [_ repeat-num]
-    (let [k (str "key" (rand-int key-range))]
+    (let [k (keyword (str "key" (rand-int key-range))) ]
       (dosync
         (alter r update-in [k] (fn [v] (if v (inc v) 1)))))))
 
@@ -28,7 +28,7 @@
 
 (defn atom-calc []
   (dotimes [_ repeat-num]
-    (let [k (str "key" (rand-int key-range))]
+    (let [k (keyword (str "key" (rand-int key-range))) ]
       (swap! a update-in [k] (fn [v] (if v (inc v) 1))))))
 
 (defn atom-bench []
@@ -43,7 +43,7 @@
 
 (defn hash-calc []
   (dotimes [_ repeat-num]
-    (let [k (str "key" (rand-int key-range))]
+    (let [k (keyword (str "key" (rand-int key-range))) ]
       (locking h
         (let [v (.get h k)]
           (.put h k (if v (inc v) 1)))))))
